@@ -5,10 +5,13 @@
  */
 (function($) {
 	$.fn.tah = function(options) {
-		var maxHeight = options.maxHeight;
+		var config = {
+			maxHeight:200
+		};
 		if (!this.length) {
 			return false;
 		}
+		$.extend(config,(options || {}));
 		this.each(function(i, t) {
 			var divP = $('<div><div contenteditable="true"></div></div>');
 			var div = divP.children('div');
@@ -29,7 +32,7 @@
 			t.on('blur focus input change propertychange keydown', function() {
 				var val = t.val().replace(/\r?\n/g, '<br/>&#8203;');
 				div.html(val);
-				if (div.height() > maxHeight) {
+				if (div.height() > config.maxHeight) {
 					t.scrollTop(div.innerHeight());
 					return;
 				}
