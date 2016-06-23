@@ -6,16 +6,16 @@
 (function($) {
 	$.fn.tah = function(options) {
 		var config = {
-			maxHeight:200
+			maxHeight: 200
 		};
 		if (!this.length) {
 			return false;
 		}
-		$.extend(config,(options || {}));
+		$.extend(config, (options || {}));
 		this.each(function(i, t) {
 			var divP = $('<div><div contenteditable="true"></div></div>');
 			var div = divP.children('div');
-			var styles = 'width,fontSize,fontFamily,lineHeight,padding,wordWrap,wordBreak,whiteSpace,letterSpacing'.split(',');
+			var styles = 'width,fontSize,fontWeight,fontStyle,fontFamily,lineHeight,padding,wordWrap,wordBreak,whiteSpace,letterSpacing'.split(',');
 			divP.css({
 				height: 0,
 				overflow: 'hidden',
