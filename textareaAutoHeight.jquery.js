@@ -36,7 +36,9 @@
 					t.scrollTop(div.innerHeight());
 					return;
 				}
-				t.height(div.height());
+				if (div.height()) {
+					t.height(div.height());
+				}
 			});
 		});
 	};
