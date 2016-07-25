@@ -33,6 +33,7 @@
 				var val = t.val().replace(/\r?\n/g, '<br/>&#8203;');
 				div.html(val);
 				if (div.height() > config.maxHeight) {
+					t.height(config.maxHeight);
 					t.scrollTop(div.innerHeight());
 					return;
 				}
