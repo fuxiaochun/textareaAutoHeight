@@ -1,57 +1,26 @@
 /**
- * jQuery插件
+ * jQuery插件 v2
  * textarea 高度自适应，控制最大高度
  * @author Xiaochun
  */
 (function($) {
-	$.fn.tah = function(options) {
-		var div = null;
-		var styles = null;
-		var config = {
-			maxHeight: 200
-		};
+	$.fn.tah = function(maxHeight){
+		var maxH = typeof maxHeight === 'undefined' ? 200 : maxHeight;
+		this.each(function(k,t){
+			var $t = $(t);
+			var pt = parseInt($t.css('paddingTop'));
+			var pb = parseInt($t.css('paddingBottom'));
 
-		if (!this.length) {
-			return false;
-		}
-
-		$.extend(config, (options || {}));
-		div = $('<div contenteditable="true"></div>');
-		styles = 'width,fontSize,fontWeight,fontStyle,fontFamily,lineHeight,padding,wordWrap,wordBreak,whiteSpace,letterSpacing'.split(',');
-		div.css({
-			left: -(9e5),
-			position: 'absolute',
-			zIndex: '-1'
-		});
-		div.appendTo($('body'));
-
-		this.each(function(i, t) {
-			t = $(t).css({
-				resize: 'none'
-			});
-			t.on('focus', function() {
-				$.each(styles, function(i, p) {
-					div.css(p, t.css(p));
-				});
-			});
-			t.on('focus blur input propertychange', function() {
-				var val = t.val().replace(/\r?\n/g, '<br/>&#8203;');
-				div.html(val);
-				if (div.height() > config.maxHeight) {
-					t.css({
-						height: config.maxHeight,
-						overflowY: 'scroll'
-					});
-					return;
-				}
-
-				if (div.height()) {
-					t.css({
-						height: div.height(),
-						overflowY: 'hidden'
-					});
+			$t.on('focus blur input propertychange',function(){
+				$t.height('auto');
+				var sh = $t[0].scrollHeight;
+				var inH = sh - pt - pb;
+				if (inH >= maxH) {
+					$t.height(maxH);
+				}else{
+					$t.height(inH);
 				}
 			});
 		});
-	};
+	}
 })(jQuery);
